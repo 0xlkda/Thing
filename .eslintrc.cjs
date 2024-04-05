@@ -1,0 +1,93 @@
+module.exports = {
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+    jest: true,
+  },
+  extends: [
+    'eslint:recommended',
+  ],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+  plugins: [
+    '@stylistic',
+  ],
+  rules: {
+    '@stylistic/semi': ['error', 'never'],
+    '@stylistic/linebreak-style': ['error', 'unix'],
+    '@stylistic/quote-props': ['error', 'consistent-as-needed'],
+    '@stylistic/quotes': ['error', 'single', {
+      allowTemplateLiterals: true,
+      avoidEscape: false,
+    }],
+    '@stylistic/indent': ['error', 2, {
+      ImportDeclaration: 1,
+      MemberExpression: 1,
+      ObjectExpression: 1,
+      outerIIFEBody: 1,
+      SwitchCase: 1,
+      VariableDeclarator: 1,
+      offsetTernaryExpressions: true,
+    }],
+    '@stylistic/comma-dangle': ['error', 'always-multiline'],
+    '@stylistic/multiline-ternary': ['error', 'always-multiline'],
+    '@stylistic/object-curly-newline': ['error', {
+      ObjectExpression: {
+        multiline: true,
+        minProperties: 2,
+      },
+      ObjectPattern: {
+        multiline: true,
+      },
+      ImportDeclaration: 'never',
+      ExportDeclaration: {
+        multiline: true,
+        minProperties: 3,
+      },
+    }],
+    '@stylistic/object-property-newline': ['error', {
+      allowAllPropertiesOnSameLine: false,
+    }],
+
+    '@stylistic/key-spacing': ['error', {
+      multiLine: {
+        beforeColon: false,
+        afterColon: true,
+      },
+    }],
+    '@stylistic/comma-spacing': ['error', {
+      before: false, after: true,
+    }],
+    '@stylistic/arrow-spacing': ['error', {
+      before: true, after: true,
+    }],
+    '@stylistic/keyword-spacing': ['error', {
+      before: true,
+    }],
+
+    '@stylistic/block-spacing': ['error', 'always'],
+    '@stylistic/object-curly-spacing': ['error', 'always'],
+    '@stylistic/space-before-blocks': ['error', 'always'],
+    '@stylistic/space-before-function-paren': ['error', {
+      anonymous: 'always',
+      asyncArrow: 'always',
+      named: 'never',
+    }],
+
+    '@stylistic/no-trailing-spaces': 'error',
+    '@stylistic/no-multi-spaces': 'error',
+    '@stylistic/no-mixed-spaces-and-tabs': 'error',
+    '@stylistic/no-multiple-empty-lines': ['error', {
+      max: 1,
+      maxBOF: 0,
+      maxEOF: 0,
+    }],
+
+    'no-empty': 0,
+    'no-unused-vars': 0,
+    'no-fallthrough': 0,
+  },
+}

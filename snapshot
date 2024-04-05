@@ -2,30 +2,30 @@ PASS tests/kitchensink.test.js
   Quicktests
     ✓ Iterable: should always green (2 ms)
     ✓ Listable: should always green
-    ✓ List: should always green (1 ms)
-    ✓ Dict: should always green (1 ms)
+    ✓ List: should always green
+    ✓ Dict: should always green
   Thing
-    ✓ should work #1
+    ✓ should work #1 (1 ms)
     ✓ should work #2
-    ✓ be constructive (1 ms)
+    ✓ be constructive
     ✓ compose states
   List
     ✓ be unique
     ✓ can add item
-    ✓ can delete item (1 ms)
+    ✓ can delete item
     ✓ can transform items
-    ✓ can be iterating
+    ✓ can be iterating (1 ms)
   Dict
     ✓ be unique
-    ✓ can add item (1 ms)
+    ✓ can add item
     ✓ can delete item
-    ✓ can transform items (1 ms)
+    ✓ can transform items
     ✓ can be iterating
   RealThing
     ✓ be constructive
     ✓ be unique
-    ✓ has states (1 ms)
-    ✓ has behaviors
+    ✓ has states
+    ✓ has behaviors (1 ms)
     ✓ has both states and behaviors
   PropertyList
     ✓ can add new property
@@ -34,6 +34,35 @@ PASS tests/kitchensink.test.js
   GraphicElement
     ✓ is unique (1 ms)
     ✓ has propertyList
+
+PASS tests/alphabets.test.js
+  ✓ has 26 chars (1 ms)
+  ✓ is UPPERCASE english alphabets
+  ✓ can be transformed to lowercase english alphabets
+  ✓ has function expressions from Char
+
+PASS tests/goodie.test.js
+  ✓ mine should do magic (1 ms)
+  ✓ more magic with mine (1 ms)
+  ✓ they could not!
+  ✓ more magic and dead
+
+PASS tests/thing.test.js
+  ✓ can really make thing #1 (1 ms)
+  ✓ can really make thing #2 (2 ms)
+  ✓ can really make thing #3
+  ✓ can inheritant behaviors (1 ms)
+  be pure
+    ✓ primities check
+    ✓ reference check
+    ✓ unicity check
+
+PASS tests/clone.test.js
+  ✓ Object (1 ms)
+  ✓ Array
+  ✓ Map
+  ✓ Set (1 ms)
+  ✓ everything at once (1 ms)
 
 PASS tests/unicity.test.js
   ✓ constructive (1 ms)
@@ -47,46 +76,17 @@ PASS tests/unicity.test.js
   ✓ test #8: ref in mixin Thing in array
   ✓ test #9: composed
 
-PASS tests/thing.test.js
-  ✓ can really make thing #1 (1 ms)
-  ✓ can really make thing #2 (2 ms)
-  ✓ can really make thing #3
-  ✓ can inheritant behaviors (1 ms)
-  be pure
-    ✓ primities check
-    ✓ reference check
-    ✓ unicity check (1 ms)
-
-PASS tests/alphabets.test.js
-  ✓ has 26 chars (1 ms)
-  ✓ is UPPERCASE english alphabets
-  ✓ can be transformed to lowercase english alphabets
-  ✓ has function expressions from Char
-
 PASS tests/references.test.js
   ✓ return new Thing instance when call Thing.new() (1 ms)
-  ✓ return new Thing instance when call Thing.new(params) (1 ms)
-  ✓ instance share function expressions, but not others
-  ✓ params changed its function, all instances should have the changes (1 ms)
+  ✓ return new Thing instance when call Thing.new(params)
+  ✓ instance share function expressions, but not others (1 ms)
+  ✓ params changed its function, all instances should have the changes
   ✓ return new Thing instance when call Thing.new(params, ...mixins)
-  ✓ instances share all the function expressions with params & mixins
-  ✓ params changed its function, so instance with mixins should have the change too (1 ms)
-
-PASS tests/goodie.test.js
-  ✓ mine should do magic (1 ms)
-  ✓ more magic with mine
-  ✓ they could not! (1 ms)
-  ✓ more magic and dead
-
-PASS tests/clone.test.js
-  ✓ Object (1 ms)
-  ✓ Array
-  ✓ Map
-  ✓ Set
-  ✓ everything at once (3 ms)
+  ✓ instances share all the function expressions with params & mixins (1 ms)
+  ✓ params changed its function, so instance with mixins should have the change too
 
 Test Suites: 7 passed, 7 total
 Tests:       65 passed, 65 total
 Snapshots:   0 total
-Time:        0.314 s, estimated 1 s
+Time:        0.317 s, estimated 1 s
 Ran all test suites.

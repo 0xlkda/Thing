@@ -1,4 +1,4 @@
-import { make } from '../src/thing.js'
+import { make } from 'Thing'
 
 var Char = make({
   value: '',
@@ -18,8 +18,12 @@ alphabets.toString = function (reducer = (s, c) => s.concat(c)) { return this.re
 var chars = alphabets.map((value) => Char.new({ value }))
 chars.toString = function () { return this.reduce((s, char) => s.concat(char.value), '') }
 
-it('has 26 chars', () => expect(chars.toString().length).toBe(26))
-it('is UPPERCASE english alphabets', () => expect(chars.toString()).toBe('ABCDEFGHIJKLMNOPQRSTUVWXYZ'))
+it('has 26 chars', () => {
+  expect(chars.toString().length).toBe(26)
+})
+it('is UPPERCASE english alphabets', () => {
+  expect(chars.toString()).toBe('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+})
 it('can be transformed to lowercase english alphabets', () => {
   chars.forEach(char => char.change(char.value.toLowerCase()))
   expect(chars.toString()).toBe('abcdefghijklmnopqrstuvwxyz')

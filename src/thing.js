@@ -22,6 +22,12 @@ let Thing = {
   new: function (params = this, ...mixins) {
     let instance = Object.create(this)
     instance.mixins = mixins.concat(this.mixins).filter(Boolean)
+    instance.mixins.forEach(mixin => {
+      for (let key in mixin) {
+        instance[key] = clone(mixin[key])
+      }
+      copySymbols(instance, mixin)
+    })
 
     if (params) {
       for (let key in params) {
@@ -38,13 +44,6 @@ let Thing = {
       }
       copySymbols(instance, params)
     }
-
-    mixins.forEach(mixin => {
-      for (let key in mixin) {
-        instance[key] = clone(mixin[key])
-      }
-      copySymbols(instance, mixin)
-    })
 
     return instance
   },

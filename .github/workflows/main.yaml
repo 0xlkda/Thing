@@ -1,4 +1,4 @@
-name: Run Tests
+name: Tests
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Use Node.js
+    - name: Setup Node.js environment
       uses: actions/setup-node@v2
       with:
         node-version: '20'
@@ -21,8 +21,8 @@ jobs:
     - name: Install pnpm
       run: npm install -g pnpm
 
-    - name: Install Dependencies
+    - name: Install dependencies
       run: pnpm install
 
-    - name: Run Jest Tests
+    - name: Run tests
       run: pnpm test

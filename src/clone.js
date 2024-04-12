@@ -27,7 +27,13 @@ export var clone = function (obj, keepAsIs = KeepAsIs) {
   if (Types.isArray(obj)) return Engines.array(obj)
   else if (Types.isObject(obj)) return Engines.object(obj)
   else {
-    if (typeof structuredClone === 'function') return structuredClone(obj)
+    if (typeof structuredClone === 'function') {
+      try {
+        return structuredClone(obj)
+      } catch (error) {
+        return obj
+      }
+    }
     else {
       if (Types.isMap(obj)) return Engines.map(obj)
       else if (Types.isSet(obj)) return Engines.set(obj)

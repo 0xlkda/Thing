@@ -1,8 +1,27 @@
 import { clone } from './clone.js'
 
+let copyKeys = function (target, source) {
+  for (let key in source) {
+    target[key] = clone(source[key])
+  }
+}
 let copySymbols = function (target, source) {
   for (let symbol of Object.getOwnPropertySymbols(source)) {
     target[symbol] = source[symbol]
+  }
+}
+let copyEverythingExceptFunctions = function (target, source) {
+  for (let key in source) {
+    if (typeof source[key] === 'function') {
+      Object.defineProperty(target, key, {
+        get: function () { return source[key] },
+        set: function (newValue) { source[key] = newValue },
+        enumerable: true,
+        configurable: true,
+      })
+    } else {
+      target[key] = clone(source[key])
+    }
   }
 }
 
@@ -23,25 +42,12 @@ let Thing = {
     let instance = Object.create(this)
     instance.mixins = mixins.concat(this.mixins).filter(Boolean)
     instance.mixins.forEach(mixin => {
-      for (let key in mixin) {
-        instance[key] = clone(mixin[key])
-      }
+      copyKeys(instance, mixin)
       copySymbols(instance, mixin)
     })
 
     if (params) {
-      for (let key in params) {
-        if (typeof params[key] === 'function') {
-          Object.defineProperty(instance, key, {
-            get: function () { return params[key] },
-            set: function (newValue) { params[key] = newValue },
-            enumerable: true,
-            configurable: true,
-          })
-        } else {
-          instance[key] = clone(params[key])
-        }
-      }
+      copyEverythingExceptFunctions(instance, params)
       copySymbols(instance, params)
     }
 
@@ -51,4 +57,6 @@ let Thing = {
 
 let make = (...args) => Thing.new(...args, UsefulThing)
 
-export { Thing, make }
+export {
+  Thing, make, clone,
+}

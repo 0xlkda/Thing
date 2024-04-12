@@ -1,4 +1,4 @@
-import { make } from '../src/thing.js'
+import { make as make } from '../src/thing.js'
 
 let commands = {
   turnLeft: function () { return this.name + ' turned left' },
@@ -6,8 +6,7 @@ let commands = {
   go: function () { return this.name + ' gooo' },
   stop: function () { return this.name + ' stopped' },
 }
-let CarCommands = make(commands)
-let Car = make({ name: 'Toyasca' }, CarCommands)
+let Car = make({ name: 'Toyasca' }, commands)
 
 it('Car stories', () => {
   expect(Car.turnLeft()).toBe('Toyasca turned left')
@@ -15,9 +14,11 @@ it('Car stories', () => {
   expect(Car.go()).toBe('Toyasca gooo')
   expect(Car.stop()).toBe('Toyasca stopped')
 })
-
 describe('Pimp my rides', () => {
-  let MorePowerEngine = { go: function () { return `${this.name} supadupa gooooooooooooooooooooooo` } }
+  let MorePowerEngine = {
+    go: function () { return `${this.name} supadupa gooooooooooooooooooooooo` },
+    nitros: function () { return this.go() + ' woooooshhhhhhhhhhh!' },
+  }
   let testRides = function (PowerCar, Car) {
     it('Car', () => {
       expect(Car.turnLeft()).toBe('Toyasca turned left')
@@ -29,6 +30,7 @@ describe('Pimp my rides', () => {
       expect(PowerCar.turnLeft()).toBe('Toyasca turned left')
       expect(PowerCar.turnRight()).toBe('Toyasca turned right')
       expect(PowerCar.go()).toBe('Toyasca supadupa gooooooooooooooooooooooo')
+      expect(PowerCar.nitros()).toBe('Toyasca supadupa gooooooooooooooooooooooo woooooshhhhhhhhhhh!')
       expect(PowerCar.stop()).toBe('Toyasca stopped')
     })
   }

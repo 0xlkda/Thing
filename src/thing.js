@@ -1,16 +1,16 @@
 import { clone } from './clone.js'
 
-let copyKeys = function (target, source) {
+function copyKeys(target, source) {
   for (let key in source) {
     target[key] = clone(source[key])
   }
 }
-let copySymbols = function (target, source) {
+function copySymbols(target, source) {
   for (let symbol of Object.getOwnPropertySymbols(source)) {
     target[symbol] = source[symbol]
   }
 }
-let copyEverythingExceptFunctions = function (target, source) {
+function copyEverythingExceptFunctions(target, source) {
   for (let key in source) {
     if (typeof source[key] === 'function') {
       Object.defineProperty(target, key, {
@@ -25,38 +25,59 @@ let copyEverythingExceptFunctions = function (target, source) {
   }
 }
 
-let UsefulThing = {
-  is: function (that) {
-    return Object.is(this, that)
-  },
-  allocate: function () {
-    return clone(this)
-  },
-  clone: function () {
-    return this.allocate()
-  },
+function handleParams(instance, params) {
+  copyEverythingExceptFunctions(instance, params)
+  copySymbols(instance, params)
+}
+function handleMixins(instance, mixins) {
+  instance.mixins = mixins
+  instance.mixins.forEach(mixin => {
+    copyKeys(instance, mixin)
+    copySymbols(instance, mixin)
+  })
+}
+function cleanupMixins(...mixins) {
+  return Array.from(new Set(...mixins)).filter(Boolean)
 }
 
 let Thing = {
   new: function (params = this, ...mixins) {
-    let instance = Object.create(this)
-    instance.mixins = mixins.concat(this.mixins).filter(Boolean)
-    instance.mixins.forEach(mixin => {
-      copyKeys(instance, mixin)
-      copySymbols(instance, mixin)
+    var instance = Object.create(this)
+    var mixins = cleanupMixins([].concat(this.mixins, params.mixins, mixins))
+
+    handleMixins(instance, mixins)
+    handleParams(instance, params)
+    return instance
+  },
+}
+let VerbalThing = {
+  new: function (params = this, ...mixins) {
+    var instance = Thing.new(...arguments)
+    console.log('INPUT: ', {
+      this: this,
+      params,
+      mixins,
     })
-
-    if (params) {
-      copyEverythingExceptFunctions(instance, params)
-      copySymbols(instance, params)
-    }
-
+    console.log('OUTPUT: ', { instance })
     return instance
   },
 }
 
-let make = (...args) => Thing.new(...args, UsefulThing)
+let UsefulMixin = {
+  is: function (that) {
+    return Object.is(this, that)
+  },
+  clone: function () {
+    return clone(this)
+  },
+}
+
+let make = (...args) => Thing.new(...args, UsefulMixin)
+let makeVerbal = (...args) => VerbalThing.new(...args, UsefulMixin)
 
 export {
-  Thing, make, clone,
+  Thing,
+  clone,
+  make,
+  makeVerbal,
 }
